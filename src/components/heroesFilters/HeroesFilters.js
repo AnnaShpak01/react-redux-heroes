@@ -3,7 +3,8 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames';
 
-import { fetchFilters, activeFilterChanged } from '../../actions';
+import { fetchFilters } from '../../actions';
+import { filtersChanged } from './filtersSlice';
 import Spinner from '../spinner/Spinner';
 
 const HeroesFilters = () => {
@@ -14,6 +15,7 @@ const HeroesFilters = () => {
 
     useEffect(() => {
         dispatch(fetchFilters(request));
+
         // eslint-disable-next-line
     }, []);
 
@@ -28,7 +30,6 @@ const HeroesFilters = () => {
             return <h5 className="text-center mt-5">Фильтры не найдены</h5>
         }
 
-        console.log(arr);
         return arr.map(({name, className, label}) => {
 
             const btnClass = classNames('btn', className, {
@@ -39,7 +40,7 @@ const HeroesFilters = () => {
                         key={name} 
                         id={name} 
                         className={btnClass}
-                        onClick={() => dispatch(activeFilterChanged(name))}
+                        onClick={() => dispatch(filtersChanged(name))}
                         >{label}</button>
         })
     }
